@@ -15,8 +15,6 @@ jobs:
       with:
         node-version: 12
       run: yarn install
-      run: yarn build
-      run: yarn test
 
     - name: AWS S3 Sync Github Action
       uses: sai-sharan/aws-s3-sync-action@v0.1.0
