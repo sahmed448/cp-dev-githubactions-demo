@@ -1,0 +1,41 @@
+name: Build and Deploy
+
+on:
+    pull_request:
+        branches: [ master ]
+
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '2'
+      - name: gitleaks-action
+        uses: zricethezav/gitleaks-action@master
+
+  build:
+    needs: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+      run: yarn install
+      run: yarn build
+      run: yarn test
+
+    - name: Push build to S3
+      uses: sai-sharan/aws-s3-sync-action@master
+      with:
+        access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY  }}
+        region: 'us-west-2'
+        source: 'build'
+        destination_bucket: ${{ secrets.AWS_S3_BUCKET }}
+        destination_prefix: 'wmtc'
+        exclude: '.git/*'
+        delete: true
+        quiet: false
