@@ -1,8 +1,8 @@
-name: Build and Deploy
-
+name: workflow to trigger wallmart ca
 on:
-    pull_request:
-        branches: [ master ]
+  push:
+    branches:
+      - wmtc
 
 jobs:
   gitleaks:
@@ -12,7 +12,7 @@ jobs:
         with:
           fetch-depth: '2'
       - name: gitleaks-action
-        uses: zricethezav/gitleaks-action@master
+      - uses: zricethezav/gitleaks-action@master
 
   build:
     needs: gitleaks
