@@ -2,7 +2,7 @@ name: workflow to trigger wallmart us
 on:
   push:
     branches:
-      - wmtu
+      - wmtc
 
 jobs:
   build:
