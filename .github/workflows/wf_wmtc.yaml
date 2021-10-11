@@ -20,3 +20,16 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
+    - name: Push build to S3
+    - uses: sai-sharan/aws-s3-sync-action@master
+      with:
+        access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY  }}
+        region: 'us-west-2'
+        source: 'build'
+        destination_bucket: ${{ secrets.AWS_S3_BUCKET }}
+        destination_prefix: 'wmtc'
+        exclude: '.git/*'
+        delete: true
+        quiet: false
+
