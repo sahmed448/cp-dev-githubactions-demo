@@ -11,8 +11,9 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
 
-    - name: Push build to S3
-      uses: sai-sharan/aws-s3-sync-action@master
+    - name: AWS S3 Sync Github Action
+      uses: sai-sharan/aws-s3-sync-action@v0.1.0
+
       with:
         access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY  }}
