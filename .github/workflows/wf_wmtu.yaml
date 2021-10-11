@@ -5,9 +5,18 @@ on:
       - wmtu
 
 jobs:
-  deploy:
+  gitleaks:
     runs-on: ubuntu-latest
-    
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '2'
+      - name: gitleaks-action
+        uses: zricethezav/gitleaks-action@master
+
+  deploy:
+    needs: gitleaks
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - uses: awact/s3-action@master
@@ -18,4 +27,3 @@ jobs:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY  }}
-        
