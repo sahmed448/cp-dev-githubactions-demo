@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v2
-        - name: Use Node.js
-        - uses: actions/setup-node@v1
 
         - name: Push build to S3
           uses: sai-sharan/aws-s3-sync-action@master
